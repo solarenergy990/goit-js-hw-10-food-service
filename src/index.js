@@ -41,7 +41,7 @@ saveTheme();
 refs.bodyContainer.classList.add(Theme.LIGHT);
 let currentTheme = refs.bodyContainer.classList.value;
 
-const onCheckBoxChange = evt => {
+const onCheckBoxChange = () => {
   if (currentTheme === Theme.LIGHT) {
     refs.bodyContainer.classList.remove(Theme.LIGHT);
     refs.bodyContainer.classList.add(Theme.DARK);
