@@ -28,8 +28,6 @@ const saveTheme = () => {
   if (savedValue) {
     refs.bodyContainer.classList.remove(currentTheme);
     refs.bodyContainer.classList.add(savedValue);
-
-    console.log(savedValue);
   }
   if (savedValue === Theme.DARK) {
     refs.themeSwitcher.checked = true;
