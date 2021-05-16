@@ -24,11 +24,11 @@ const Theme = {
 
 const saveTheme = () => {
   const savedValue = localStorage.getItem('theme');
-  //   console.log(savedValue);
+
   if (savedValue) {
     refs.bodyContainer.classList.remove(currentTheme);
     refs.bodyContainer.classList.add(savedValue);
-    // console.log(currentTheme);
+
     console.log(savedValue);
   }
   if (savedValue === Theme.DARK) {
