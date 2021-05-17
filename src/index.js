@@ -2,8 +2,6 @@ import './sass/main.scss';
 import cards from './menu.json';
 import menuMarkupTpl from '../src/templates/menu-markup.hbs';
 
-menuMarkupTpl([]);
-
 const refs = {
   menuContainer: document.querySelector('.js-menu'),
   themeSwitcher: document.querySelector('#theme-switch-toggle'),
@@ -15,6 +13,7 @@ const createMenuCardsMarkup = cards => {
 };
 
 const cardsMarkup = createMenuCardsMarkup(cards);
+
 refs.menuContainer.insertAdjacentHTML('beforeend', cardsMarkup);
 
 const Theme = {
@@ -24,33 +23,44 @@ const Theme = {
 
 const saveTheme = () => {
   const savedValue = localStorage.getItem('theme');
-
   if (savedValue) {
     refs.bodyContainer.classList.remove(currentTheme);
     refs.bodyContainer.classList.add(savedValue);
+  } else {
+    refs.bodyContainer.classList.add(Theme.LIGHT);
   }
+};
+
+const saveSwitcherPosition = () => {
+  const savedValue = localStorage.getItem('theme');
   if (savedValue === Theme.DARK) {
     refs.themeSwitcher.checked = true;
+  } else {
+    refs.themeSwitcher.checked = false;
   }
 };
 
 saveTheme();
+saveSwitcherPosition();
 
-refs.bodyContainer.classList.add(Theme.LIGHT);
-let currentTheme = refs.bodyContainer.classList.value;
+let currentTheme = Theme.LIGHT;
 
 const onCheckBoxChange = () => {
   if (currentTheme === Theme.LIGHT) {
-    refs.bodyContainer.classList.remove(Theme.LIGHT);
-    refs.bodyContainer.classList.add(Theme.DARK);
-    currentTheme = refs.bodyContainer.classList.value;
-  } else {
-    refs.bodyContainer.classList.remove(Theme.DARK);
-    refs.bodyContainer.classList.add(Theme.LIGHT);
-    currentTheme = refs.bodyContainer.classList.value;
+    replaceTheme(Theme.LIGHT, Theme.DARK);
+    currentTheme = Theme.DARK;
+  } else if (currentTheme === Theme.DARK) {
+    replaceTheme(Theme.DARK, Theme.LIGHT);
+    currentTheme = Theme.LIGHT;
   }
 
+  console.log(refs.themeSwitcher.checked);
   localStorage.setItem('theme', currentTheme);
+};
+
+const replaceTheme = (oldTheme, newTheme) => {
+  refs.bodyContainer.classList.remove(oldTheme);
+  refs.bodyContainer.classList.add(newTheme);
 };
 
 refs.themeSwitcher.addEventListener('change', onCheckBoxChange);
