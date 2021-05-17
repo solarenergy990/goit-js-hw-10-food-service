@@ -2428,7 +2428,6 @@ var _menuMarkup = _interopRequireDefault(require("../src/templates/menu-markup.h
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _menuMarkup.default)([]);
 var refs = {
   menuContainer: document.querySelector('.js-menu'),
   themeSwitcher: document.querySelector('#theme-switch-toggle'),
@@ -2447,36 +2446,46 @@ var Theme = {
 };
 
 var saveTheme = function saveTheme() {
-  var savedValue = localStorage.getItem('theme'); //   console.log(savedValue);
+  var savedValue = localStorage.getItem('theme');
 
   if (savedValue) {
     refs.bodyContainer.classList.remove(currentTheme);
-    refs.bodyContainer.classList.add(savedValue); // console.log(currentTheme);
-
-    console.log(savedValue);
+    refs.bodyContainer.classList.add(savedValue);
+  } else {
+    refs.bodyContainer.classList.add(Theme.LIGHT);
   }
+};
+
+var saveSwitcherPosition = function saveSwitcherPosition() {
+  var savedValue = localStorage.getItem('theme');
 
   if (savedValue === Theme.DARK) {
     refs.themeSwitcher.checked = true;
+  } else {
+    refs.themeSwitcher.checked = false;
   }
 };
 
 saveTheme();
-refs.bodyContainer.classList.add(Theme.LIGHT);
-var currentTheme = refs.bodyContainer.classList.value;
+saveSwitcherPosition();
+var currentTheme = Theme.LIGHT;
 
-var onCheckBoxChange = function onCheckBoxChange(evt) {
+var onCheckBoxChange = function onCheckBoxChange() {
   if (currentTheme === Theme.LIGHT) {
-    refs.bodyContainer.classList.remove(Theme.LIGHT);
-    refs.bodyContainer.classList.add(Theme.DARK);
-    currentTheme = refs.bodyContainer.classList.value;
-  } else {
-    refs.bodyContainer.classList.remove(Theme.DARK);
-    refs.bodyContainer.classList.add(Theme.LIGHT);
-    currentTheme = refs.bodyContainer.classList.value;
+    replaceTheme(Theme.LIGHT, Theme.DARK);
+    currentTheme = Theme.DARK;
+  } else if (currentTheme === Theme.DARK) {
+    replaceTheme(Theme.DARK, Theme.LIGHT);
+    currentTheme = Theme.LIGHT;
   }
 
+  console.log(refs.themeSwitcher.checked);
   localStorage.setItem('theme', currentTheme);
+};
+
+var replaceTheme = function replaceTheme(oldTheme, newTheme) {
+  refs.bodyContainer.classList.remove(oldTheme);
+  refs.bodyContainer.classList.add(newTheme);
 };
 
 refs.themeSwitcher.addEventListener('change', onCheckBoxChange);
@@ -2508,7 +2517,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60853" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59829" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
