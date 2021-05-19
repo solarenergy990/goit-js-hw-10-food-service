@@ -8,11 +8,7 @@ const refs = {
   bodyContainer: document.querySelector('body'),
 };
 
-const createMenuCardsMarkup = cards => {
-  return menuMarkupTpl(cards);
-};
-
-const cardsMarkup = createMenuCardsMarkup(cards);
+const cardsMarkup = menuMarkupTpl(cards);
 
 refs.menuContainer.insertAdjacentHTML('beforeend', cardsMarkup);
 
@@ -23,38 +19,28 @@ const Theme = {
 
 const saveTheme = () => {
   const savedValue = localStorage.getItem('theme');
-  if (savedValue) {
+  if (savedValue === Theme.DARK) {
     refs.bodyContainer.classList.remove(currentTheme);
     refs.bodyContainer.classList.add(savedValue);
+    refs.themeSwitcher.checked = true;
   } else {
     refs.bodyContainer.classList.add(Theme.LIGHT);
   }
 };
 
-const saveSwitcherPosition = () => {
-  const savedValue = localStorage.getItem('theme');
-  if (savedValue === Theme.DARK) {
-    refs.themeSwitcher.checked = true;
-  } else {
-    refs.themeSwitcher.checked = false;
-  }
-};
-
 saveTheme();
-saveSwitcherPosition();
 
 let currentTheme = Theme.LIGHT;
 
-const onCheckBoxChange = () => {
-  if (currentTheme === Theme.LIGHT) {
+const onCheckBoxChange = evt => {
+  if (evt.target.checked) {
     replaceTheme(Theme.LIGHT, Theme.DARK);
     currentTheme = Theme.DARK;
-  } else if (currentTheme === Theme.DARK) {
+  } else {
     replaceTheme(Theme.DARK, Theme.LIGHT);
     currentTheme = Theme.LIGHT;
   }
 
-  console.log(refs.themeSwitcher.checked);
   localStorage.setItem('theme', currentTheme);
 };
 
