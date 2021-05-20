@@ -2444,7 +2444,6 @@ var saveTheme = function saveTheme() {
   var savedValue = localStorage.getItem('theme');
 
   if (savedValue === Theme.DARK) {
-    refs.bodyContainer.classList.remove(currentTheme);
     refs.bodyContainer.classList.add(savedValue);
     refs.themeSwitcher.checked = true;
   } else {
@@ -2501,7 +2500,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63473" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60492" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
