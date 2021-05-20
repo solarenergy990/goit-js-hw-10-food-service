@@ -20,7 +20,6 @@ const Theme = {
 const saveTheme = () => {
   const savedValue = localStorage.getItem('theme');
   if (savedValue === Theme.DARK) {
-    refs.bodyContainer.classList.remove(currentTheme);
     refs.bodyContainer.classList.add(savedValue);
     refs.themeSwitcher.checked = true;
   } else {
